@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCaravana | Infrastructură, Transport & Energie</title>
+    <title>AutoCaravana | Infrastructură & Energie</title>
     <!-- Lucide Icons pentru iconițe moderne și curate -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         /* ==========================================
-           1. STILURI GENERALE ȘI VARIABILE
+           1. VARIABILE ȘI SETĂRI DE BAZĂ
            ========================================== */
         :root {
             --primary: #0F172A;
@@ -37,13 +37,30 @@
             overflow-x: hidden;
         }
 
-        /* Ascundem inițial ambele versiuni pentru a evita un salt vizual ("flicker") la încărcare */
-        #desktop-version, #mobile-version {
-            display: none;
+        /* ==========================================
+           2. REGULILE DE DETECTARE AUTOMATĂ (CSS ONLY)
+           ========================================== */
+        
+        /* IMPLICIT: Arătăm varianta de CALCULATOR, ascundem MOBILUL */
+        #desktop-version {
+            display: block !important;
+        }
+        #mobile-version {
+            display: none !important;
+        }
+
+        /* CÂND ECRANUL ESTE DE TELEFON (Mai mic de 768px lățime) */
+        @media (max-width: 767px) {
+            #desktop-version {
+                display: none !important; /* Ascunde complet calculatorul */
+            }
+            #mobile-version {
+                display: block !important; /* Arată exclusiv mobilul */
+            }
         }
 
         /* ==========================================
-           2. DESIGN SPECIFIC PENTRU CALCULATOR (DESKTOP)
+           3. DESIGN PENTRU CALCULATOR (DESKTOP STYLE)
            ========================================== */
         #desktop-version .header-top {
             background-color: #020617;
@@ -108,7 +125,7 @@
             transition: color 0.3s;
         }
 
-        #desktop-version .nav-links a:hover, #desktop-version .nav-links a.active {
+        #desktop-version .nav-links a:hover {
             color: var(--accent);
         }
 
@@ -220,22 +237,22 @@
 
 
         /* ==========================================
-           3. DESIGN DE MOBIL ULTRA-OPTIMIZAT (PHONE ONLY)
+           4. DESIGN COMPLET ADAPTAT PENTRU TELEFON (MOBILE STYLE)
            ========================================== */
         #mobile-version {
             background-color: #F8FAFC;
         }
 
-        /* Navigație curată de mobil */
         #mobile-version .mobile-nav {
             background-color: var(--primary);
-            padding: 15px 20px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 2000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         #mobile-version .mobile-logo {
@@ -253,11 +270,11 @@
             background: none;
             border: none;
             color: var(--white);
-            font-size: 24px;
             cursor: pointer;
+            padding: 5px;
         }
 
-        /* Meniu de mobil ca ecran complet / overlay curat */
+        /* Meniu de tip sertar (slide down) */
         #mobile-version .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -270,13 +287,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 25px;
+            gap: 30px;
         }
 
         #mobile-version .mobile-menu-overlay a {
             color: var(--white);
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             text-decoration: none;
         }
 
@@ -287,91 +304,87 @@
             background: none;
             border: none;
             color: var(--white);
+            cursor: pointer;
         }
 
-        /* Hero Secțiune adaptată la ecran mic (fără imagini uriașe care încarcă greu) */
         #mobile-version .mobile-hero {
             background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
             color: var(--white);
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         #mobile-version .mobile-hero h1 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
-            line-height: 1.3;
+            line-height: 1.25;
             margin-bottom: 15px;
         }
 
         #mobile-version .mobile-hero p {
             font-size: 15px;
             color: #94A3B8;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         #mobile-version .mobile-hero .m-btn {
             background-color: var(--accent);
             color: var(--primary);
-            padding: 14px 24px;
+            padding: 15px 20px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
             display: block;
-            width: 100%;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
         }
 
-        /* Secțiuni pe Mobil */
         #mobile-version .mobile-section {
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         #mobile-version .m-section-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--primary);
             margin-bottom: 20px;
             position: relative;
-            padding-left: 12px;
+            padding-left: 14px;
         }
 
         #mobile-version .m-section-title::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 4px;
-            height: 20px;
+            top: 6px;
+            height: 22px;
             width: 4px;
             background-color: var(--accent);
             border-radius: 2px;
         }
 
-        /* Despre Noi - Mobil */
         #mobile-version .mobile-about-card {
             background-color: var(--white);
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
             border: 1px solid var(--border);
         }
 
         #mobile-version .mobile-stats {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             margin-top: 20px;
         }
 
         #mobile-version .mobile-stat-box {
             background-color: var(--bg-light);
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
-            border-left: 3px solid var(--accent);
+            border-left: 4px solid var(--accent);
         }
 
-        /* Servicii - Mobil (Carduri verticale, curate, cu butoane mari) */
         #mobile-version .mobile-services-list {
             display: flex;
             flex-direction: column;
@@ -393,38 +406,35 @@
             color: var(--accent);
             padding: 10px;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex;
         }
 
-        /* Contact & Formular - Mobil (Câmpuri mari pentru degete) */
         #mobile-version .mobile-form {
             background-color: var(--white);
-            padding: 20px;
+            padding: 25px 20px;
             border-radius: 12px;
             border: 1px solid var(--border);
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         #mobile-version .m-input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         #mobile-version .m-input-group label {
             display: block;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--primary);
         }
 
         #mobile-version .m-input-group input, #mobile-version .m-input-group textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1.5px solid var(--border);
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 16px; /* Împiedică zoom-ul automat pe iPhone la tastare */
             outline: none;
             background-color: #FAFAFA;
         }
@@ -439,30 +449,29 @@
             color: var(--primary);
             border: none;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
         }
 
-        /* Footer - Mobil */
         #mobile-version footer {
             background-color: #020617;
             color: #94A3B8;
-            padding: 30px 20px;
+            padding: 40px 20px;
             text-align: center;
-            font-size: 13px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
     <!-- =======================================================================
-         BLOC DISPOZITIV 1: CALCULATOR / DESKTOP VERSION
+         BLOC 1: DESIGN PENTRU CALCULATOR (DESKTOP)
          ======================================================================= -->
     <div id="desktop-version">
-        <!-- Top Bar Desktop -->
+        <!-- Top Bar -->
         <div class="header-top">
             <div class="header-top-info">
                 <span><i data-lucide="map-pin" style="width:14px;"></i> Chișinău, str. Constructorilor 5/4</span>
@@ -472,12 +481,12 @@
             <div>Certificat ISO 9001:2015</div>
         </div>
 
-        <!-- Meniu Navigație Desktop -->
+        <!-- Meniu Navigație -->
         <header>
             <div class="navbar">
                 <a href="#" class="logo">Auto<span>Caravana</span></a>
                 <ul class="nav-links">
-                    <li><a href="#" class="active">Acasă</a></li>
+                    <li><a href="#">Acasă</a></li>
                     <li><a href="#despre-d">Despre noi</a></li>
                     <li><a href="#servicii-d">Servicii</a></li>
                     <li><a href="#contact-d">Contact</a></li>
@@ -486,14 +495,14 @@
             </div>
         </header>
 
-        <!-- Hero Desktop -->
+        <!-- Hero -->
         <section class="hero">
             <h1>Soluții de infrastructură, logistică și energie durabilă pentru afacerea ta</h1>
             <p>Din 2007, construim drumurile care mișcă Republica Moldova înainte și sprijinim tranziția către energie verde.</p>
             <a href="#servicii-d" class="cta-btn" style="padding: 15px 30px; font-size: 16px;">Descoperă serviciile noastre</a>
         </section>
 
-        <!-- Despre Noi Desktop -->
+        <!-- Despre Noi -->
         <section id="despre-d" class="about-section">
             <div class="about-image">
                 <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=800&q=80" alt="Constructii">
@@ -501,7 +510,7 @@
             <div>
                 <span style="color:var(--accent); font-weight:700; text-transform:uppercase;">Cine suntem</span>
                 <h2 style="font-size:32px; color:var(--primary); margin-top:10px; margin-bottom:20px;">Partenerul tău în dezvoltarea infrastructurii naționale</h2>
-                <p style="color:var(--text-light); margin-bottom:20px;">Fondată în 2007, AutoCaravana a devenit un reper național în infrastructura rutieră, foraje, demolări controlate și implementarea de soluții moderne pentru energie regenerabilă.</p>
+                <p style="color:var(--text-light); margin-bottom:20px;">Fondată în 2007, AutoCaravana a devenit un punct de referință în execuția drumurilor, demolări controlate, foraje complexe și implementarea structurilor pentru energie verde.</p>
                 <div class="stats-grid">
                     <div style="background:#F1F5F9; padding:20px; border-radius:8px; text-align:center;">
                         <h3 style="font-size:28px; color:var(--primary);">18+</h3>
@@ -511,62 +520,52 @@
                         <h3 style="font-size:28px; color:var(--primary);">120+</h3>
                         <p style="font-size:12px; color:var(--text-light);">Proiecte Gata</p>
                     </div>
-                    <div style="background:#F1F5F9; padding:20px; border-radius:8px; text-align:center;">
-                        <h3 style="font-size:28px; color:var(--primary);">300+</h3>
-                        <p style="font-size:12px; color:var(--text-light);">Profesioniști</p>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Servicii Desktop -->
+        <!-- Servicii -->
         <section id="servicii-d">
             <h2 style="text-align:center; font-size:32px; color:var(--primary); margin-bottom:50px;">Servicii Profesionale</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="truck" style="width:36px;height:36px;"></i></div>
                     <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Transport Rutier</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Flotă proprie dotată complet pentru transportul sigur al mărfurilor, agregatelor și materialelor rutiere pe întreg teritoriul țării.</p>
+                    <p style="color:var(--text-light); font-size:14px;">Flotă proprie complet dotată pentru transportul sigur al mărfurilor și agregatelor.</p>
                 </div>
                 <div class="service-card">
                     <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="shovel" style="width:36px;height:36px;"></i></div>
                     <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Infrastructură Rutieră</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Asfaltare premium de drumuri, reabilitări, amenajare trotuare și platforme industriale conforme standardelor ISO.</p>
+                    <p style="color:var(--text-light); font-size:14px;">Asfaltare drumuri, reabilitări, amenajare trotuare și platforme industriale moderne.</p>
                 </div>
                 <div class="service-card">
                     <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="wind" style="width:36px;height:36px;"></i></div>
                     <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Energie Verde</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Suport tehnic, proiectare și lucrări de instalare pentru parcuri fotovoltaice și structuri eoliene sustenabile.</p>
+                    <p style="color:var(--text-light); font-size:14px;">Suport tehnic integral pentru montarea parcurilor fotovoltaice și eoliene.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Desktop -->
-        <section id="contact-d" style="padding: 0;">
+        <!-- Contact -->
+        <section id="contact-d" style="padding: 100px 8% 50px;">
             <div class="contact-section">
                 <div>
                     <h2 style="font-size:36px; margin-bottom:20px;">Să discutăm despre proiectul tău</h2>
-                    <p style="color:#94A3B8; margin-bottom:40px;">Specialiștii noștri îți oferă suport în maxim 24 de ore cu deviz și consultanță gratuită.</p>
-                    <div style="display:flex; flex-direction:column; gap:20px;">
-                        <div><strong>Telefon:</strong> +373 69 161 858</div>
-                        <div><strong>E-mail:</strong> srlautocaravana@gmail.com</div>
-                        <div><strong>Birou:</strong> Chișinău, str. Constructorilor 5/4</div>
-                    </div>
+                    <p style="color:#94A3B8; margin-bottom:40px;">Specialiștii noștri îți oferă suport în maxim 24 de ore cu deviz gratuit.</p>
                 </div>
                 <form class="contact-form">
                     <h3 style="color:var(--primary);">Solicită Ofertă</h3>
                     <div class="form-row">
-                        <div class="form-group"><input type="text" placeholder="Numele tău" style="padding:12px; border:1px solid var(--border); border-radius:6px;"></div>
-                        <div class="form-group"><input type="email" placeholder="E-mail" style="padding:12px; border:1px solid var(--border); border-radius:6px;"></div>
+                        <input type="text" placeholder="Numele tău" style="padding:12px; border:1px solid var(--border); border-radius:6px;">
+                        <input type="email" placeholder="E-mail" style="padding:12px; border:1px solid var(--border); border-radius:6px;">
                     </div>
-                    <input type="text" placeholder="Subiect" style="padding:12px; border:1px solid var(--border); border-radius:6px; width:100%;">
                     <textarea rows="4" placeholder="Mesajul tău" style="padding:12px; border:1px solid var(--border); border-radius:6px; width:100%;"></textarea>
                     <button type="submit" class="cta-btn" style="border:none; cursor:pointer;">Trimite Solicitarea</button>
                 </form>
             </div>
         </section>
 
-        <!-- Footer Desktop -->
+        <!-- Footer -->
         <footer style="background-color:#020617; padding:40px 8%; color:#94A3B8; text-align:center;">
             <p>© 2026 AutoCaravana. Toate drepturile rezervate.</p>
         </footer>
@@ -574,10 +573,10 @@
 
 
     <!-- =======================================================================
-         BLOC DISPOZITIV 2: MOBIL / PHONE VERSION (MOBILE-FIRST CLEAN UI)
+         BLOC 2: DESIGN EXCLUSIV PENTRU TELEFON (MOBIL)
          ======================================================================= -->
     <div id="mobile-version">
-        <!-- Navigation Mobil -->
+        <!-- Navigație Mobil -->
         <nav class="mobile-nav">
             <a href="#" class="mobile-logo">Auto<span>Caravana</span></a>
             <button class="burger-btn" onclick="openMobileMenu()">
@@ -585,7 +584,7 @@
             </button>
         </nav>
 
-        <!-- Fullscreen Overlay Menu pentru Mobil -->
+        <!-- Overlay Meniu de Mobil -->
         <div class="mobile-menu-overlay" id="mobileOverlay">
             <button class="close-menu-btn" onclick="closeMobileMenu()">
                 <i data-lucide="x" style="width:32px; height:32px;"></i>
@@ -596,10 +595,10 @@
             <a href="#m-contact" onclick="closeMobileMenu()">Contact</a>
         </div>
 
-        <!-- Hero Secțiune Mobil - Simplă și Rapid de Încărcat -->
+        <!-- Hero Mobil -->
         <div class="mobile-hero">
-            <h1>Soluții durabile de infrastructură și transport</h1>
-            <p>Construim cu mândrie drumuri sigure și susținem viitorul energiei verzi în Moldova.</p>
+            <h1>Soluții de infrastructură și transport</h1>
+            <p>Construim drumuri sigure și susținem proiectele de energie regenerabilă din Republica Moldova.</p>
             <a href="#m-contact" class="m-btn">Cere Ofertă Rapidă</a>
         </div>
 
@@ -607,15 +606,15 @@
         <div id="m-despre" class="mobile-section">
             <h2 class="m-section-title">Despre Companie</h2>
             <div class="mobile-about-card">
-                <p style="font-size:14px; color:var(--text-main); margin-bottom:15px;">Din 2007, <strong>AutoCaravana</strong> realizează lucrări tehnice de drumuri, demolări controlate și foraje complexe pe teritoriul Republicii Moldova, punând accent pe siguranță și durabilitate.</p>
+                <p style="font-size:14px; color:var(--text-main); margin-bottom:15px;">Din 2007, <strong>AutoCaravana</strong> realizează lucrări tehnice de drumuri, demolări controlate și foraje ecologice de înaltă precizie.</p>
                 <div class="mobile-stats">
                     <div class="mobile-stat-box">
-                        <strong style="font-size:20px; color:var(--primary); display:block;">18+ Ani</strong>
-                        <span style="font-size:12px; color:var(--text-light);">Activitate Națională</span>
+                        <strong style="font-size:22px; color:var(--primary); display:block;">18+ Ani</strong>
+                        <span style="font-size:12px; color:var(--text-light);">Experiență Națională</span>
                     </div>
                     <div class="mobile-stat-box">
-                        <strong style="font-size:20px; color:var(--primary); display:block;">120+ Proiecte</strong>
-                        <span style="font-size:12px; color:var(--text-light);">Livrate cu succes</span>
+                        <strong style="font-size:22px; color:var(--primary); display:block;">120+ Proiecte</strong>
+                        <span style="font-size:12px; color:var(--text-light);">Finalizate cu succes</span>
                     </div>
                 </div>
             </div>
@@ -623,97 +622,71 @@
 
         <!-- Servicii Mobil -->
         <div id="m-servicii" class="mobile-section" style="background-color: #F1F5F9;">
-            <h2 class="m-section-title">Serviciile Noastre</h2>
+            <h2 class="m-section-title">Servicii Profesionale</h2>
             <div class="mobile-services-list">
                 <div class="m-service-card">
                     <div class="m-service-icon"><i data-lucide="truck" style="width:22px;"></i></div>
                     <div>
-                        <h4 style="font-weight:700; color:var(--primary);">Transport de Mărfuri</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Flotă complet utilată pentru deplasarea sigură a agregatelor rutiere.</p>
+                        <h4 style="font-weight:700; color:var(--primary);">Transport de Agregate</h4>
+                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Flotă proprie pregătită pentru transport de volum și tonaj mare.</p>
                     </div>
                 </div>
                 <div class="m-service-card">
                     <div class="m-service-icon"><i data-lucide="shovel" style="width:22px;"></i></div>
                     <div>
                         <h4 style="font-weight:700; color:var(--primary);">Infrastructură Drumuri</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Asfaltare și reparație drumuri la nivel european.</p>
+                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Asfaltare premium, reparații și amenajări conforme normelor ISO.</p>
                     </div>
                 </div>
                 <div class="m-service-card">
                     <div class="m-service-icon"><i data-lucide="wind" style="width:22px;"></i></div>
                     <div>
-                        <h4 style="font-weight:700; color:var(--primary);">Parcuri Energie Verde</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Suport tehnic dedicat pentru panouri solare și eoliene.</p>
+                        <h4 style="font-weight:700; color:var(--primary);">Energie Regenerabilă</h4>
+                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Instalări calificate pentru panouri fotovoltaice și eoliene.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Contact Mobil (Formular cu input-uri mari) -->
+        <!-- Contact Mobil -->
         <div id="m-contact" class="mobile-section">
-            <h2 class="m-section-title">Contact</h2>
-            <div style="margin-bottom:20px; font-size:14px; line-height:1.6;">
-                <p>📞 <strong>Telefon:</strong> +373 69 161 858</p>
-                <p>✉️ <strong>E-mail:</strong> srlautocaravana@gmail.com</p>
+            <h2 class="m-section-title">Contact rapid</h2>
+            <div style="margin-bottom:25px; font-size:15px; line-height:1.7; background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                <p style="margin-bottom:8px;">📞 <strong>Telefon:</strong> +373 69 161 858</p>
+                <p style="margin-bottom:8px;">✉️ <strong>E-mail:</strong> srlautocaravana@gmail.com</p>
                 <p>📍 <strong>Adresă:</strong> Chișinău, str. Constructorilor 5/4</p>
             </div>
             
             <form class="mobile-form">
-                <h4 style="margin-bottom:15px; color:var(--primary);">Trimite un mesaj rapid</h4>
+                <h4 style="margin-bottom:15px; color:var(--primary); font-size:18px;">Solicită Oferta de Preț</h4>
                 <div class="m-input-group">
                     <label>Nume complet</label>
-                    <input type="text" placeholder="Numele dumneavoastră" required>
+                    <input type="text" placeholder="Numele tău" required>
                 </div>
                 <div class="m-input-group">
                     <label>Telefon / E-mail</label>
-                    <input type="text" placeholder="Cum vă putem contacta" required>
+                    <input type="text" placeholder="Datele tale de contact" required>
                 </div>
                 <div class="m-input-group">
-                    <label>Mesaj scurt</label>
-                    <textarea rows="3" placeholder="Detalii despre ce doriți să realizați..."></textarea>
+                    <label>Detalii lucrare</label>
+                    <textarea rows="3" placeholder="Scrie pe scurt ce servicii dorești..."></textarea>
                 </div>
-                <button type="submit" class="m-submit-btn">Trimite acum</button>
+                <button type="submit" class="m-submit-btn">Trimite cererea</button>
             </form>
         </div>
 
         <!-- Footer Mobil -->
         <footer>
-            <p>© 2026 AutoCaravana. SRL</p>
+            <p>© 2026 AutoCaravana SRL</p>
             <p style="font-size:11px; margin-top:5px; color:#64748B;">Chișinău, Republica Moldova</p>
         </footer>
     </div>
 
-
     <!-- ==========================================
-         4. SCRIPT DETECTARE DISPOZITIV (DEVICE DETECTION)
+         5. JAVASCRIPT (DOAR PENTRU MENIUL INTERACTIV)
          ========================================== -->
     <script>
-        function checkDevice() {
-            const desktopDiv = document.getElementById('desktop-version');
-            const mobileDiv = document.getElementById('mobile-version');
-
-            // Detectăm dacă utilizatorul este pe telefon (pe baza lățimii sau a User Agent-ului)
-            const isMobileWidth = window.innerWidth <= 768;
-            const isMobileAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-            if (isMobileWidth || isMobileAgent) {
-                // Afișăm exclusiv designul de telefon mobil
-                desktopDiv.style.display = 'none';
-                mobileDiv.style.display = 'block';
-            } else {
-                // Afișăm exclusiv designul bogat pentru calculator / ecrane mari
-                mobileDiv.style.display = 'none';
-                desktopDiv.style.display = 'block';
-            }
-        }
-
-        // Rulăm funcția la încărcarea paginii
-        window.addEventListener('DOMContentLoaded', checkDevice);
-        
-        // Rulăm și la redimensionarea ecranului pentru dezvoltatori/teste rapide
-        window.addEventListener('resize', checkDevice);
-
-        // Funcții speciale pentru meniul de mobil (Overlay)
+        // Meniul pe mobil (Deschidere / Închidere)
         function openMobileMenu() {
             document.getElementById('mobileOverlay').style.display = 'flex';
         }
@@ -722,7 +695,7 @@
             document.getElementById('mobileOverlay').style.display = 'none';
         }
 
-        // Inițializăm iconițele Lucide
+        // Inițializare automată a iconițelor Lucide
         lucide.createIcons();
     </script>
 </body>
