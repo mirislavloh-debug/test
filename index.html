@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCaravana | Infrastructură & Energie</title>
-    <!-- Lucide Icons pentru iconițe moderne și curate -->
+    <title>AutoCaravana | Servicii Profesionale</title>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* ==========================================
-           1. VARIABILE ȘI SETĂRI DE BAZĂ
-           ========================================== */
         :root {
             --primary: #0F172A;
             --primary-light: #1E293B;
@@ -27,676 +24,315 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
             background-color: var(--bg-light);
             color: var(--text-main);
-            line-height: 1.5;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
         /* ==========================================
-           2. REGULILE DE DETECTARE AUTOMATĂ (CSS ONLY)
+           LOGICA DE AFIȘARE DISPOZITIV (DESKTOP / MOBIL)
            ========================================== */
-        
-        /* IMPLICIT: Arătăm varianta de CALCULATOR, ascundem MOBILUL */
-        #desktop-version {
-            display: block !important;
-        }
-        #mobile-version {
-            display: none !important;
-        }
+        #desktop-version { display: block !important; }
+        #mobile-version { display: none !important; }
 
-        /* CÂND ECRANUL ESTE DE TELEFON (Mai mic de 768px lățime) */
-        @media (max-width: 767px) {
-            #desktop-version {
-                display: none !important; /* Ascunde complet calculatorul */
-            }
-            #mobile-version {
-                display: block !important; /* Arată exclusiv mobilul */
-            }
+        @media (max-width: 768px) {
+            #desktop-version { display: none !important; }
+            #mobile-version { display: block !important; }
         }
 
         /* ==========================================
-           3. DESIGN PENTRU CALCULATOR (DESKTOP STYLE)
+           MODAL PIN SECURE
            ========================================== */
-        #desktop-version .header-top {
-            background-color: #020617;
-            color: var(--text-light);
-            font-size: 13px;
-            padding: 10px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        #desktop-version .header-top-info {
-            display: flex;
-            gap: 25px;
-        }
-
-        #desktop-version .header-top-info span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        #desktop-version header {
-            background-color: var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        #desktop-version .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-        }
-
-        #desktop-version .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        #desktop-version .logo span {
-            color: var(--accent);
-        }
-
-        #desktop-version .nav-links {
-            display: flex;
-            gap: 35px;
-            list-style: none;
-        }
-
-        #desktop-version .nav-links a {
-            color: #CBD5E1;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: color 0.3s;
-        }
-
-        #desktop-version .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        #desktop-version .cta-btn {
-            background-color: var(--accent);
-            color: var(--primary);
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        #desktop-version .cta-btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        #desktop-version .hero {
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=80') center center/cover;
-            padding: 150px 8%;
-            color: var(--white);
-            text-align: center;
-        }
-
-        #desktop-version .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            max-width: 900px;
-            margin: 0 auto 20px;
-        }
-
-        #desktop-version .hero p {
-            font-size: 18px;
-            color: #94A3B8;
-            max-width: 700px;
-            margin: 0 auto 35px;
-        }
-
-        #desktop-version section {
-            padding: 100px 8%;
-        }
-
-        #desktop-version .about-section {
-            background-color: var(--white);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        #desktop-version .about-image img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        #desktop-version .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        #desktop-version .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        #desktop-version .service-card {
-            background-color: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 35px 30px;
-            transition: all 0.3s;
-        }
-
-        #desktop-version .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-        }
-
-        #desktop-version .contact-section {
-            background-color: var(--primary);
-            color: var(--white);
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
-            padding: 80px;
-            margin: 50px 8%;
-            border-radius: 16px;
-        }
-
-        #desktop-version .contact-form {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        #desktop-version .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-
-        /* ==========================================
-           4. DESIGN COMPLET ADAPTAT PENTRU TELEFON (MOBILE STYLE)
-           ========================================== */
-        #mobile-version {
-            background-color: #F8FAFC;
-        }
-
-        #mobile-version .mobile-nav {
-            background-color: var(--primary);
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        #mobile-version .mobile-logo {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        #mobile-version .mobile-logo span {
-            color: var(--accent);
-        }
-
-        #mobile-version .burger-btn {
-            background: none;
-            border: none;
-            color: var(--white);
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        /* Meniu de tip sertar (slide down) */
-        #mobile-version .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--primary);
-            z-index: 3000;
+        .auth-modal {
             display: none;
-            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
             justify-content: center;
             align-items: center;
+        }
+        .auth-box {
+            background: var(--white);
+            padding: 35px 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .pin-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            margin: 20px 0;
+            outline: none;
+            background: var(--bg-light);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* ==========================================
+           STILURI PENTRU SITE-UL ORIGINAL (DESKTOP)
+           ========================================== */
+        .d-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .d-nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .d-nav a:hover {
+            color: var(--accent);
+        }
+        .d-btn-admin {
+            background: var(--primary-light);
+            color: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .d-btn-admin:hover {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 100px 8%;
+            text-align: center;
+        }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; font-weight: 800; }
+        .hero p { font-size: 18px; max-width: 600px; margin: 0 auto 30px auto; color: var(--text-light); }
+        .btn-cta {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .btn-cta:hover { background: var(--accent-hover); }
+
+        /* Sectiuni Servicii */
+        .services {
+            padding: 80px 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
-
-        #mobile-version .mobile-menu-overlay a {
-            color: var(--white);
-            font-size: 24px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        #mobile-version .close-menu-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--white);
-            cursor: pointer;
-        }
-
-        #mobile-version .mobile-hero {
-            background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
-            color: var(--white);
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        #mobile-version .mobile-hero h1 {
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1.25;
-            margin-bottom: 15px;
-        }
-
-        #mobile-version .mobile-hero p {
-            font-size: 15px;
-            color: #94A3B8;
-            margin-bottom: 30px;
-        }
-
-        #mobile-version .mobile-hero .m-btn {
-            background-color: var(--accent);
-            color: var(--primary);
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            display: block;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-        }
-
-        #mobile-version .mobile-section {
-            padding: 50px 20px;
-        }
-
-        #mobile-version .m-section-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 20px;
-            position: relative;
-            padding-left: 14px;
-        }
-
-        #mobile-version .m-section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 6px;
-            height: 22px;
-            width: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        #mobile-version .mobile-about-card {
-            background-color: var(--white);
-            padding: 20px;
+        .service-card {
+            background: var(--white);
+            padding: 30px;
             border-radius: 12px;
             border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
+        .service-card h3 { margin: 15px 0 10px 0; color: var(--primary); }
 
-        #mobile-version .mobile-stats {
+        /* ==========================================
+           STILURI PENTRU SITE-UL ORIGINAL (MOBIL)
+           ========================================== */
+        .m-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 15px 20px;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
-        #mobile-version .mobile-stat-box {
-            background-color: var(--bg-light);
-            padding: 20px;
-            border-radius: 8px;
+        .m-hero {
+            background: var(--primary);
+            color: var(--white);
+            padding: 50px 20px;
             text-align: center;
-            border-left: 4px solid var(--accent);
         }
-
-        #mobile-version .mobile-services-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .m-hero h2 { font-size: 28px; margin-bottom: 15px; }
+        .m-hero p { font-size: 14px; margin-bottom: 20px; color: var(--text-light); }
+        
+        .m-services {
+            padding: 30px 20px;
         }
-
-        #mobile-version .m-service-card {
+        .m-service-item {
             background: var(--white);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             border: 1px solid var(--border);
-            display: flex;
-            gap: 15px;
-            align-items: start;
-        }
-
-        #mobile-version .m-service-icon {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent);
-            padding: 10px;
-            border-radius: 8px;
-            display: inline-flex;
-        }
-
-        #mobile-version .mobile-form {
-            background-color: var(--white);
-            padding: 25px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-top: 20px;
-        }
-
-        #mobile-version .m-input-group {
-            margin-bottom: 20px;
-        }
-
-        #mobile-version .m-input-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-
-        #mobile-version .m-input-group input, #mobile-version .m-input-group textarea {
-            width: 100%;
-            padding: 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            font-size: 16px; /* Împiedică zoom-ul automat pe iPhone la tastare */
-            outline: none;
-            background-color: #FAFAFA;
-        }
-
-        #mobile-version .m-input-group input:focus, #mobile-version .m-input-group textarea:focus {
-            border-color: var(--accent);
-            background-color: var(--white);
-        }
-
-        #mobile-version .m-submit-btn {
-            background-color: var(--accent);
-            color: var(--primary);
-            border: none;
-            width: 100%;
-            padding: 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #mobile-version footer {
-            background-color: #020617;
-            color: #94A3B8;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <!-- =======================================================================
-         BLOC 1: DESIGN PENTRU CALCULATOR (DESKTOP)
-         ======================================================================= -->
-    <div id="desktop-version">
-        <!-- Top Bar -->
-        <div class="header-top">
-            <div class="header-top-info">
-                <span><i data-lucide="map-pin" style="width:14px;"></i> Chișinău, str. Constructorilor 5/4</span>
-                <span><i data-lucide="phone" style="width:14px;"></i> +373 69 161 858</span>
-                <span><i data-lucide="mail" style="width:14px;"></i> srlautocaravana@gmail.com</span>
-            </div>
-            <div>Certificat ISO 9001:2015</div>
-        </div>
-
-        <!-- Meniu Navigație -->
-        <header>
-            <div class="navbar">
-                <a href="#" class="logo">Auto<span>Caravana</span></a>
-                <ul class="nav-links">
-                    <li><a href="#">Acasă</a></li>
-                    <li><a href="#despre-d">Despre noi</a></li>
-                    <li><a href="#servicii-d">Servicii</a></li>
-                    <li><a href="#contact-d">Contact</a></li>
-                </ul>
-                <a href="#contact-d" class="cta-btn">Cere Ofertă</a>
-            </div>
-        </header>
-
-        <!-- Hero -->
-        <section class="hero">
-            <h1>Soluții de infrastructură, logistică și energie durabilă pentru afacerea ta</h1>
-            <p>Din 2007, construim drumurile care mișcă Republica Moldova înainte și sprijinim tranziția către energie verde.</p>
-            <a href="#servicii-d" class="cta-btn" style="padding: 15px 30px; font-size: 16px;">Descoperă serviciile noastre</a>
-        </section>
-
-        <!-- Despre Noi -->
-        <section id="despre-d" class="about-section">
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=800&q=80" alt="Constructii">
-            </div>
-            <div>
-                <span style="color:var(--accent); font-weight:700; text-transform:uppercase;">Cine suntem</span>
-                <h2 style="font-size:32px; color:var(--primary); margin-top:10px; margin-bottom:20px;">Partenerul tău în dezvoltarea infrastructurii naționale</h2>
-                <p style="color:var(--text-light); margin-bottom:20px;">Fondată în 2007, AutoCaravana a devenit un punct de referință în execuția drumurilor, demolări controlate, foraje complexe și implementarea structurilor pentru energie verde.</p>
-                <div class="stats-grid">
-                    <div style="background:#F1F5F9; padding:20px; border-radius:8px; text-align:center;">
-                        <h3 style="font-size:28px; color:var(--primary);">18+</h3>
-                        <p style="font-size:12px; color:var(--text-light);">Ani Experiență</p>
-                    </div>
-                    <div style="background:#F1F5F9; padding:20px; border-radius:8px; text-align:center;">
-                        <h3 style="font-size:28px; color:var(--primary);">120+</h3>
-                        <p style="font-size:12px; color:var(--text-light);">Proiecte Gata</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Servicii -->
-        <section id="servicii-d">
-            <h2 style="text-align:center; font-size:32px; color:var(--primary); margin-bottom:50px;">Servicii Profesionale</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="truck" style="width:36px;height:36px;"></i></div>
-                    <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Transport Rutier</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Flotă proprie complet dotată pentru transportul sigur al mărfurilor și agregatelor.</p>
-                </div>
-                <div class="service-card">
-                    <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="shovel" style="width:36px;height:36px;"></i></div>
-                    <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Infrastructură Rutieră</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Asfaltare drumuri, reabilitări, amenajare trotuare și platforme industriale moderne.</p>
-                </div>
-                <div class="service-card">
-                    <div style="color:var(--accent); margin-bottom:15px;"><i data-lucide="wind" style="width:36px;height:36px;"></i></div>
-                    <h3 style="font-size:20px; margin-bottom:10px; color:var(--primary);">Energie Verde</h3>
-                    <p style="color:var(--text-light); font-size:14px;">Suport tehnic integral pentru montarea parcurilor fotovoltaice și eoliene.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact-d" style="padding: 100px 8% 50px;">
-            <div class="contact-section">
-                <div>
-                    <h2 style="font-size:36px; margin-bottom:20px;">Să discutăm despre proiectul tău</h2>
-                    <p style="color:#94A3B8; margin-bottom:40px;">Specialiștii noștri îți oferă suport în maxim 24 de ore cu deviz gratuit.</p>
-                </div>
-                <form class="contact-form">
-                    <h3 style="color:var(--primary);">Solicită Ofertă</h3>
-                    <div class="form-row">
-                        <input type="text" placeholder="Numele tău" style="padding:12px; border:1px solid var(--border); border-radius:6px;">
-                        <input type="email" placeholder="E-mail" style="padding:12px; border:1px solid var(--border); border-radius:6px;">
-                    </div>
-                    <textarea rows="4" placeholder="Mesajul tău" style="padding:12px; border:1px solid var(--border); border-radius:6px; width:100%;"></textarea>
-                    <button type="submit" class="cta-btn" style="border:none; cursor:pointer;">Trimite Solicitarea</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer style="background-color:#020617; padding:40px 8%; color:#94A3B8; text-align:center;">
-            <p>© 2026 AutoCaravana. Toate drepturile rezervate.</p>
-        </footer>
-    </div>
-
-
-    <!-- =======================================================================
-         BLOC 2: DESIGN EXCLUSIV PENTRU TELEFON (MOBIL)
-         ======================================================================= -->
-    <div id="mobile-version">
-        <!-- Navigație Mobil -->
-        <nav class="mobile-nav">
-            <a href="#" class="mobile-logo">Auto<span>Caravana</span></a>
-            <button class="burger-btn" onclick="openMobileMenu()">
-                <i data-lucide="menu" style="width:26px; height:26px;"></i>
-            </button>
-        </nav>
-
-        <!-- Overlay Meniu de Mobil -->
-        <div class="mobile-menu-overlay" id="mobileOverlay">
-            <button class="close-menu-btn" onclick="closeMobileMenu()">
-                <i data-lucide="x" style="width:32px; height:32px;"></i>
-            </button>
-            <a href="#" onclick="closeMobileMenu()">Acasă</a>
-            <a href="#m-despre" onclick="closeMobileMenu()">Despre noi</a>
-            <a href="#m-servicii" onclick="closeMobileMenu()">Servicii</a>
-            <a href="#m-contact" onclick="closeMobileMenu()">Contact</a>
-        </div>
-
-        <!-- Hero Mobil -->
-        <div class="mobile-hero">
-            <h1>Soluții de infrastructură și transport</h1>
-            <p>Construim drumuri sigure și susținem proiectele de energie regenerabilă din Republica Moldova.</p>
-            <a href="#m-contact" class="m-btn">Cere Ofertă Rapidă</a>
-        </div>
-
-        <!-- Despre Noi Mobil -->
-        <div id="m-despre" class="mobile-section">
-            <h2 class="m-section-title">Despre Companie</h2>
-            <div class="mobile-about-card">
-                <p style="font-size:14px; color:var(--text-main); margin-bottom:15px;">Din 2007, <strong>AutoCaravana</strong> realizează lucrări tehnice de drumuri, demolări controlate și foraje ecologice de înaltă precizie.</p>
-                <div class="mobile-stats">
-                    <div class="mobile-stat-box">
-                        <strong style="font-size:22px; color:var(--primary); display:block;">18+ Ani</strong>
-                        <span style="font-size:12px; color:var(--text-light);">Experiență Națională</span>
-                    </div>
-                    <div class="mobile-stat-box">
-                        <strong style="font-size:22px; color:var(--primary); display:block;">120+ Proiecte</strong>
-                        <span style="font-size:12px; color:var(--text-light);">Finalizate cu succes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Servicii Mobil -->
-        <div id="m-servicii" class="mobile-section" style="background-color: #F1F5F9;">
-            <h2 class="m-section-title">Servicii Profesionale</h2>
-            <div class="mobile-services-list">
-                <div class="m-service-card">
-                    <div class="m-service-icon"><i data-lucide="truck" style="width:22px;"></i></div>
-                    <div>
-                        <h4 style="font-weight:700; color:var(--primary);">Transport de Agregate</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Flotă proprie pregătită pentru transport de volum și tonaj mare.</p>
-                    </div>
-                </div>
-                <div class="m-service-card">
-                    <div class="m-service-icon"><i data-lucide="shovel" style="width:22px;"></i></div>
-                    <div>
-                        <h4 style="font-weight:700; color:var(--primary);">Infrastructură Drumuri</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Asfaltare premium, reparații și amenajări conforme normelor ISO.</p>
-                    </div>
-                </div>
-                <div class="m-service-card">
-                    <div class="m-service-icon"><i data-lucide="wind" style="width:22px;"></i></div>
-                    <div>
-                        <h4 style="font-weight:700; color:var(--primary);">Energie Regenerabilă</h4>
-                        <p style="font-size:13px; color:var(--text-light); margin-top:4px;">Instalări calificate pentru panouri fotovoltaice și eoliene.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Mobil -->
-        <div id="m-contact" class="mobile-section">
-            <h2 class="m-section-title">Contact rapid</h2>
-            <div style="margin-bottom:25px; font-size:15px; line-height:1.7; background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                <p style="margin-bottom:8px;">📞 <strong>Telefon:</strong> +373 69 161 858</p>
-                <p style="margin-bottom:8px;">✉️ <strong>E-mail:</strong> srlautocaravana@gmail.com</p>
-                <p>📍 <strong>Adresă:</strong> Chișinău, str. Constructorilor 5/4</p>
-            </div>
+    <!-- ==========================================
+         MODAL PENTRU PIN SECURE (ADMINISTRATOR)
+         ========================================== -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-box">
+            <i data-lucide="lock" style="width: 40px; height: 40px; margin: 0 auto; color: var(--accent);"></i>
+            <h2 style="color: var(--primary); font-size: 20px; margin-top:10px;">Autentificare Administrator</h2>
+            <p style="font-size: 12px; color: var(--text-light); margin-top: 4px;">Introdu PIN-ul pentru a accesa setările</p>
             
-            <form class="mobile-form">
-                <h4 style="margin-bottom:15px; color:var(--primary); font-size:18px;">Solicită Oferta de Preț</h4>
-                <div class="m-input-group">
-                    <label>Nume complet</label>
-                    <input type="text" placeholder="Numele tău" required>
-                </div>
-                <div class="m-input-group">
-                    <label>Telefon / E-mail</label>
-                    <input type="text" placeholder="Datele tale de contact" required>
-                </div>
-                <div class="m-input-group">
-                    <label>Detalii lucrare</label>
-                    <textarea rows="3" placeholder="Scrie pe scurt ce servicii dorești..."></textarea>
-                </div>
-                <button type="submit" class="m-submit-btn">Trimite cererea</button>
-            </form>
+            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric">
+            
+            <button class="auth-btn" onclick="checkPin()">Accesează Panoul</button>
+            <p style="margin-top:15px; font-size:13px; color: var(--text-light); cursor:pointer;" onclick="closeAuth()">Anulează</p>
         </div>
-
-        <!-- Footer Mobil -->
-        <footer>
-            <p>© 2026 AutoCaravana SRL</p>
-            <p style="font-size:11px; margin-top:5px; color:#64748B;">Chișinău, Republica Moldova</p>
-        </footer>
     </div>
+
 
     <!-- ==========================================
-         5. JAVASCRIPT (DOAR PENTRU MENIUL INTERACTIV)
+         VERSIUNEA DESKTOP ORIGINALĂ
+         ========================================== -->
+    <div id="desktop-version">
+        <header class="d-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i data-lucide="truck" style="color:var(--accent); width:28px;"></i>
+                <h1 style="font-size: 22px; font-weight:800;">AutoCaravana</h1>
+            </div>
+            <nav class="d-nav">
+                <a href="#servicii">Servicii</a>
+                <a href="#despre">Despre Noi</a>
+                <a href="#contact">Contact</a>
+                <!-- Butonul discret de administrare -->
+                <button onclick="showAuth()" class="d-btn-admin" style="margin-left: 25px;">
+                    <i data-lucide="shield" style="width:16px;"></i> Admin
+                </button>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>Soluții de Transport Profesionale</h1>
+            <p>Servicii sigure, rapide și adaptate nevoilor tale pentru logistica mărfurilor tale de orice dimensiune.</p>
+            <a href="#contact" class="btn-cta">Cere Ofertă</a>
+        </section>
+
+        <section id="servicii" class="services">
+            <div class="service-card">
+                <i data-lucide="package" style="color:var(--accent); width:40px; height:40px;"></i>
+                <h3>Transport Mărfuri</h3>
+                <p>Livrare sigură și monitorizare constantă pentru bunurile tale, oriunde în țară.</p>
+            </div>
+            <div class="service-card">
+                <i data-lucide="clock" style="color:var(--accent); width:40px; height:40px;"></i>
+                <h3>Servicii Rapide</h3>
+                <p>Respectăm termenele limită și livrăm în cel mai scurt timp posibil, în deplină siguranță.</p>
+            </div>
+            <div class="service-card">
+                <i data-lucide="shield-check" style="color:var(--accent); width:40px; height:40px;"></i>
+                <h3>Siguranță Garantată</h3>
+                <p>Flotă modernă, asigurată și șoferi experimentați pregătiți pentru orice traseu.</p>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- ==========================================
+         VERSIUNEA MOBIL ORIGINALĂ
+         ========================================== -->
+    <div id="mobile-version">
+        <header class="m-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="truck" style="color:var(--accent); width:22px;"></i>
+                <h3 style="font-size:18px; font-weight:800;">AutoCaravana</h3>
+            </div>
+            <!-- Buton Admin pe Mobil -->
+            <button onclick="showAuth()" style="background:none; border:none; color:var(--accent); font-weight:700; display:flex; align-items:center; gap:4px;">
+                <i data-lucide="lock" style="width:14px;"></i> Admin
+            </button>
+        </header>
+
+        <section class="m-hero">
+            <h2>Transport Rapid & Sigur</h2>
+            <p>Servicii moderne de logistică adaptate pentru orice destinație.</p>
+            <a href="tel:07000000" class="btn-cta" style="padding: 10px 20px; font-size:14px;">Apelează Acum</a>
+        </section>
+
+        <section class="m-services">
+            <div class="m-service-item">
+                <h4 style="color:var(--primary); font-weight:bold; margin-bottom:5px;">Transport Național</h4>
+                <p style="font-size:13px; color:var(--text-light);">Acoperire completă pe tot teritoriul național.</p>
+            </div>
+            <div class="m-service-item">
+                <h4 style="color:var(--primary); font-weight:bold; margin-bottom:5px;">Monitorizare GPS</h4>
+                <p style="font-size:13px; color:var(--text-light);">Știi mereu unde se află marfa ta în timp real.</p>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- ==========================================
+         LOGICĂ JAVASCRIPT & REDIRECȚIONARE
          ========================================== -->
     <script>
-        // Meniul pe mobil (Deschidere / Închidere)
-        function openMobileMenu() {
-            document.getElementById('mobileOverlay').style.display = 'flex';
+        // Pornire iconițe
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Funcții Pop-up Admin
+        function showAuth() { 
+            document.getElementById('authModal').style.display = 'flex'; 
+            document.getElementById('pinCode').focus(); 
+        }
+        
+        function closeAuth() { 
+            document.getElementById('authModal').style.display = 'none'; 
+            document.getElementById('pinCode').value = ''; 
         }
 
-        function closeMobileMenu() {
-            document.getElementById('mobileOverlay').style.display = 'none';
+        // Verificare PIN (1234) & Redirecționare
+        function checkPin() {
+            let pin = document.getElementById('pinCode').value;
+            if (pin === "1234") {
+                closeAuth();
+                // Redirecționare direct pe adresa GitHub solicitată
+                window.location.href = "https://mirislavloh-debug.github.io/test/admin.html";
+            } else {
+                alert("PIN Incorect!");
+                document.getElementById('pinCode').value = '';
+            }
         }
-
-        // Inițializare automată a iconițelor Lucide
-        lucide.createIcons();
     </script>
 </body>
 </html>
