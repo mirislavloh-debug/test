@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCaravana | Gestiune Transport</title>
+    <!-- Lucide Icons pentru un design premium -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary: #0F172A;
+            --accent: #F59E0B;
+            --accent-hover: #D97706;
+            --bg-light: #F8FAFC;
+            --white: #FFFFFF;
+            --border: #E2E8F0;
+            --text-main: #334155;
+            --text-light: #64748B;
+            --danger: #EF4444;
+            --success: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Detecție Dispozitiv */
+        #desktop-version { display: block !important; }
+        #mobile-version { display: none !important; }
+
+        @media (max-width: 768px) {
+            #desktop-version { display: none !important; }
+            #mobile-version { display: block !important; }
+        }
+
+        /* ==========================================
+           LOGICA DE ASCUNDERE PENTRU OM SIMPLU
+           ========================================== */
+        /* Implicit, tot ce ține de Admin este ASCUNS complet */
+        .admin-only {
+            display: none !important;
+        }
+
+        /* Când clasa "admin-mode" este activă pe body, arătăm elementele de admin */
+        .admin-mode .admin-only {
+            display: block !important;
+        }
+
+        /* Structură flexibilă pe Desktop: tabel pe tot ecranul pentru omul simplu, iar la admin se împarte ecranul */
+        .d-container {
+            padding: 40px 5%;
+            display: grid;
+            grid-template-columns: 1fr; /* 100% lățime implicit */
+            gap: 40px;
+        }
+        .admin-mode .d-container {
+            grid-template-columns: 320px 1fr; /* Se face loc pentru formular doar la admin */
+        }
+
+        /* Modal PIN */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .auth-box {
+            background: var(--white);
+            padding: 35px 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .pin-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            margin: 20px 0;
+            outline: none;
+            background: var(--bg-light);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* Design Elemente Generale */
+        .d-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 18px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-light); }
+        .form-control { width: 100%; padding: 11px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
+        .btn-add { width: 100%; background: var(--accent); color: var(--primary); border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background-color: var(--primary); color: var(--white); padding: 15px; font-size: 14px; }
+        td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        tr:hover td { background-color: #F8FAFC; }
+        .btn-delete { background: none; border: none; color: var(--danger); cursor: pointer; padding: 5px; }
+
+        /* Mobil */
+        .m-header { background-color: var(--primary); color: var(--white); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .m-container { padding: 20px; }
+        .m-card-list { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .m-item-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 16px; position: relative; }
+        .m-item-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+        .m-item-info { font-size: 13px; color: var(--text-light); margin-bottom: 4px; }
+        .m-item-delete { position: absolute; top: 15px; right: 15px; background: #FEE2E2; border: none; color: var(--danger); padding: 8px; border-radius: 50%; display: flex; }
+    </style>
+</head>
+<body>
+
+    <!-- MODAL INTRODUCERE PIN -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-box">
+            <i data-lucide="lock" style="width: 40px; height: 40px; margin: 0 auto; color: var(--accent);"></i>
+            <h2 style="color: var(--primary); font-size: 20px; margin-top:10px;">Autentificare Administrator</h2>
+            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric">
+            <button class="auth-btn" onclick="checkPin()">Deblochează</button>
+            <p style="margin-top:15px; font-size:13px; color: var(--text-light); cursor:pointer;" onclick="closeAuth()">Anulează</p>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         VERSUNEA DESKTOP
+         ========================================== -->
+    <div id="desktop-version">
+        <header class="d-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i data-lucide="truck" style="color:var(--accent); width:28px;"></i>
+                <h1 style="font-size: 22px; font-weight:800;">AutoCaravana <span style="font-weight:300; font-size:14px; opacity:0.8;">| Monitorizare</span></h1>
+            </div>
+            <!-- Buton de conectare care dispare după ce te loghezi -->
+            <div id="d-auth-trigger">
+                <button onclick="showAuth()" style="padding: 8px 16px; background:#1E293B; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Admin</button>
+            </div>
+        </header>
+
+        <div class="d-container">
+            <!-- Formular Adăugare (Se va afișa DOAR dacă ești Admin) -->
+            <div class="card admin-only">
+                <h3>Adăugare Transport</h3>
+                <div class="form-group">
+                    <label>Nume Mașină / Șofer</label>
+                    <input type="text" id="d-car" class="form-control" placeholder="Ex: MAN TGX / R. Vasile">
+                </div>
+                <div class="form-group">
+                    <label>Număr Înmatriculare</label>
+                    <input type="text" id="d-plate" class="form-control" placeholder="Ex: C AM 777" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label>Încărcătură</label>
+                    <input type="text" id="d-cargo" class="form-control" placeholder="Ex: 22t Marfă">
+                </div>
+                <button class="btn-add" onclick="submitData('desktop')">Adaugă în Tabel</button>
+            </div>
+
+            <!-- Tabelul curat (Vizibil pentru toată lumea) -->
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                    <h4 style="font-weight: 700; color: var(--primary);">Registru Activ</h4>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nume Mașină / Șofer</th>
+                            <th>Număr Înmatriculare</th>
+                            <th>Încărcătură</th>
+                            <!-- Antetul de acțiuni se va afișa DOAR la admin -->
+                            <th class="admin-only" style="width: 80px; text-align: center;">Șterge</th>
+                        </tr>
+                    </thead>
+                    <tbody id="desktop-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         VERSIUNEA MOBIL
+         ========================================== -->
+    <div id="mobile-version">
+        <header class="m-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="truck" style="color:var(--accent); width:22px;"></i>
+                <h3 style="font-size:18px; font-weight:800;">AutoCaravana</h3>
+            </div>
+            <div id="m-auth-trigger">
+                <button onclick="showAuth()" style="background:none; border:none; color:var(--accent); font-weight:700;">Admin</button>
+            </div>
+        </header>
+
+        <div class="m-container">
+            <!-- Formular rapid (Ascuns pentru vizitatori, vizibil doar pentru admin) -->
+            <div class="card admin-only" style="margin-bottom: 25px;">
+                <h3 style="font-size: 16px; margin-bottom:15px;">Adaugă Curse</h3>
+                <div class="form-group" style="margin-bottom: 12px;"><input type="text" id="m-car" class="form-control" placeholder="Nume Mașină / Șofer"></div>
+                <div class="form-group" style="margin-bottom: 12px;"><input type="text" id="m-plate" class="form-control" placeholder="Număr Înmatriculare" style="text-transform: uppercase;"></div>
+                <div class="form-group" style="margin-bottom: 15px;"><input type="text" id="m-cargo" class="form-control" placeholder="Încărcătură / Detalii"></div>
+                <button class="btn-add" onclick="submitData('mobile')">Salvează Rapid</button>
+            </div>
+
+            <h4 style="font-weight:700; color:var(--primary); margin-bottom:10px;">Curse active</h4>
+            <div class="m-card-list" id="mobile-cards-container"></div>
+        </div>
+    </div>
+
+    <script>
+        let isAdmin = false;
+        
+        // Memoria locală
+        let transportRegistry = JSON.parse(localStorage.getItem('autocaravana_db')) || [
+            { id: 1, car: "Volvo FH16 / Ion", plate: "C AA 123", cargo: "24t Nisip" },
+            { id: 2, car: "KamAZ / Vasile", plate: "OR AH 991", cargo: "18t Asfalt" }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderData();
+            lucide.createIcons();
+        });
+
+        function showAuth() { document.getElementById('authModal').style.display = 'flex'; document.getElementById('pinCode').focus(); }
+        function closeAuth() { document.getElementById('authModal').style.display = 'none'; document.getElementById('pinCode').value = ''; }
+
+        function checkPin() {
+            let pin = document.getElementById('pinCode').value;
+            if(pin === "1234") {
+                isAdmin = true;
+                
+                // Aplicăm clasa care deblochează elementele vizuale de pe ecran
+                document.body.classList.add('admin-mode');
+                
+                // Schimbăm butoanele de login cu confirmarea de admin logat
+                document.getElementById('d-auth-trigger').innerHTML = `<span style="color:var(--success); font-weight:bold;">● Mod Admin</span>`;
+                document.getElementById('m-auth-trigger').innerHTML = `<span style="color:var(--success); font-weight:bold;">● Admin</span>`;
+                
+                closeAuth();
+                renderData();
+            } else {
+                alert("PIN Incorect!");
+                document.getElementById('pinCode').value = '';
+            }
+        }
+
+        function renderData() {
+            const tBody = document.getElementById('desktop-table-body');
+            const mContainer = document.getElementById('mobile-cards-container');
+            tBody.innerHTML = '';
+            mContainer.innerHTML = '';
+
+            if(transportRegistry.length === 0) {
+                tBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-light); padding:30px;">Momentan nu sunt mașini active.</td></tr>`;
+                mContainer.innerHTML = `<p style="text-align:center; color:var(--text-light); padding:20px;">Nicio cursă activă.</p>`;
+                return;
+            }
+
+            transportRegistry.forEach(item => {
+                // 1. Randare Desktop
+                const row = document.createElement('tr');
+                // Dacă NU e admin, coloana de acțiune este lăsată complet GOALĂ (fără text/mesaj/buton)
+                const actionCell = isAdmin 
+                    ? `<td style="text-align: center;"><button class="btn-delete" onclick="deleteItem(${item.id})"><i data-lucide="trash-2" style="width:18px;"></i></button></td>`
+                    : `<td class="admin-only"></td>`;
+
+                row.innerHTML = `
+                    <td style="font-weight: 600; color: var(--primary);">${item.car}</td>
+                    <td><span style="background:#F1F5F9; padding:4px 8px; border-radius:4px; font-weight:700; font-size:12px;">${item.plate.toUpperCase()}</span></td>
+                    <td style="color: var(--text-light);">${item.cargo}</td>
+                    ${actionCell}
+                `;
+                tBody.appendChild(row);
+
+                // 2. Randare Mobil
+                const card = document.createElement('div');
+                card.className = 'm-item-card';
+                card.innerHTML = `
+                    <div class="m-item-title">${item.car}</div>
+                    <div class="m-item-info"><strong>Nr:</strong> ${item.plate.toUpperCase()}</div>
+                    <div class="m-item-info"><strong>Marfă:</strong> ${item.cargo}</div>
+                    ${isAdmin ? `
+                        <button class="m-item-delete" onclick="deleteItem(${item.id})">
+                            <i data-lucide="trash" style="width:16px; height:16px; color:var(--danger)"></i>
+                        </button>
+                    ` : ''}
+                `;
+                mContainer.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        function submitData(source) {
+            if(!isAdmin) return;
+
+            const carInput = document.getElementById(source === 'desktop' ? 'd-car' : 'm-car');
+            const plateInput = document.getElementById(source === 'desktop' ? 'd-plate' : 'm-plate');
+            const cargoInput = document.getElementById(source === 'desktop' ? 'd-cargo' : 'm-cargo');
+
+            const carValue = carInput.value.trim();
+            const plateValue = plateInput.value.trim();
+            const cargoValue = cargoInput.value.trim();
+
+            if(!carValue || !plateValue || !cargoValue) {
+                alert("Completează toate câmpurile!");
+                return;
+            }
+
+            const newItem = {
+                id: Date.now(),
+                car: carValue,
+                plate: plateValue,
+                cargo: cargoValue
+            };
+
+            transportRegistry.push(newItem);
+            localStorage.setItem('autocaravana_db', JSON.stringify(transportRegistry));
+
+            carInput.value = '';
+            plateInput.value = '';
+            cargoInput.value = '';
+
+            renderData();
+        }
+
+        function deleteItem(id) {
+            if(!isAdmin) return;
+            if(confirm("Ștergi această înregistrare?")) {
+                transportRegistry = transportRegistry.filter(item => item.id !== id);
+                localStorage.setItem('autocaravana_db', JSON.stringify(transportRegistry));
+                renderData();
+            }
+        }
+    </script>
+</body>
+</html>
