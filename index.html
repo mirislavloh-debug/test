@@ -31,17 +31,10 @@
             background-color: var(--bg-light);
             color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden; /* Previne scroll-ul orizontal nedorit pe mobil */
         }
 
-        /* Top Bar & Navigation */
-        header {
-            background-color: var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
+        /* Top Bar - vizibil în principal pe desktop */
         .header-top {
             background-color: #020617;
             color: var(--text-light);
@@ -56,6 +49,7 @@
         .header-top-info {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .header-top-info span {
@@ -64,11 +58,21 @@
             gap: 6px;
         }
 
+        /* Navigation Header */
+        header {
+            background-color: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 18px 5%;
+            position: relative;
         }
 
         .logo {
@@ -80,12 +84,14 @@
             align-items: center;
             gap: 8px;
             letter-spacing: -0.5px;
+            z-index: 1001;
         }
 
         .logo span {
             color: var(--accent);
         }
 
+        /* Meniu clasic - Desktop */
         .nav-links {
             display: flex;
             gap: 30px;
@@ -113,6 +119,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             font-size: 14px;
+            text-align: center;
         }
 
         .cta-btn:hover {
@@ -120,11 +127,21 @@
             transform: translateY(-2px);
         }
 
+        /* Buton Meniu Mobil (Burger) */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         /* Hero Section */
         .hero {
             position: relative;
             background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            padding: 140px 5% 120px 5%;
+            padding: 120px 5% 100px 5%;
             color: var(--white);
             text-align: center;
         }
@@ -143,7 +160,7 @@
         }
 
         .hero h1 {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 800;
             max-width: 800px;
             margin: 0 auto 20px auto;
@@ -151,42 +168,27 @@
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 17px;
             color: #94A3B8;
             max-width: 600px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 35px auto;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--white);
-            border: 2px solid rgba(255,255,255,0.2);
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--white);
-            background-color: rgba(255,255,255,0.05);
+            flex-wrap: wrap;
         }
 
         /* Section Boilerplates */
         section {
-            padding: 100px 5%;
+            padding: 80px 5%;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         .section-header span {
@@ -200,39 +202,38 @@
         }
 
         .section-header h2 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 800;
             color: var(--primary);
         }
 
-        /* Despre noi - Secțiune cu Tab-uri Interactive */
+        /* Despre noi - Secțiune cu Tab-uri */
         .about-section {
             background-color: var(--white);
             display: grid;
             grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
+            gap: 50px;
             align-items: start;
         }
 
         .about-image {
             position: relative;
-            position: sticky;
-            top: 120px;
         }
 
         .about-image img {
             width: 100%;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            display: block;
         }
 
         .about-experience-badge {
             position: absolute;
-            bottom: -20px;
-            right: -20px;
+            bottom: -15px;
+            right: -15px;
             background-color: var(--accent);
             color: var(--primary);
-            padding: 24px;
+            padding: 20px;
             border-radius: 12px;
             font-weight: 800;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -241,35 +242,35 @@
 
         .about-experience-badge span {
             display: block;
-            font-size: 36px;
+            font-size: 30px;
             line-height: 1;
         }
 
-        /* Stilurile pentru Tab-uri */
+        /* Tab-uri adaptate */
         .tab-navigation {
             display: flex;
             border-bottom: 2px solid var(--border);
             margin-bottom: 30px;
-            gap: 10px;
+            gap: 5px;
+            overflow-x: auto; /* Permite scroll pe mobil dacă sunt prea lungi */
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            padding: 12px 20px;
-            font-size: 15px;
+            padding: 12px 15px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-light);
             cursor: pointer;
             position: relative;
             transition: all 0.3s;
+            flex-shrink: 0; /* Previne strivirea butoanelor */
         }
 
-        .tab-btn:hover {
-            color: var(--primary);
-        }
-
-        .tab-btn.active {
+        .tab-btn:hover, .tab-btn.active {
             color: var(--primary);
         }
 
@@ -297,16 +298,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Detalii de conținut din tab-uri */
         .about-text h3 {
-            font-size: 28px;
+            font-size: 24px;
             color: var(--primary);
             font-weight: 800;
             margin-bottom: 15px;
         }
 
         .about-text p {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-main);
             margin-bottom: 25px;
         }
@@ -314,26 +314,27 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 15px;
             background-color: var(--bg-light);
-            padding: 25px;
+            padding: 20px;
             border-radius: 8px;
             border: 1px solid var(--border);
         }
 
         .stat-item h4 {
-            font-size: 26px;
+            font-size: 22px;
             color: var(--primary);
             font-weight: 800;
         }
 
         .stat-item p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-light);
             margin-top: 5px;
+            line-height: 1.3;
         }
 
-        /* Liste stilizate pentru Valori și Diferențiatori */
+        /* Liste stilizate Valori / Diferențiatori */
         .feature-list {
             list-style: none;
             display: flex;
@@ -355,6 +356,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .feature-text h4 {
@@ -370,18 +372,18 @@
             margin-bottom: 0;
         }
 
-        /* Services Grid */
+        /* Servicii */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .service-card {
             background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 40px 30px;
+            padding: 30px 24px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -411,53 +413,43 @@
         .service-icon {
             background-color: var(--bg-light);
             color: var(--primary);
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover .service-icon {
-            background-color: var(--accent);
-            color: var(--primary);
+            margin-bottom: 20px;
         }
 
         .service-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .service-card p {
             color: var(--text-light);
-            font-size: 15px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
         }
 
         .service-card a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .service-card a:hover {
-            color: var(--accent);
-        }
-
-        /* Featured Projects */
+        /* Proiecte */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 25px;
         }
 
         .project-card {
@@ -466,99 +458,95 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
 
         .project-img {
-            height: 240px;
+            height: 200px;
             background-size: cover;
             background-position: center;
         }
 
         .project-info {
-            padding: 30px;
+            padding: 24px;
         }
 
         .project-meta {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent);
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .project-info h3 {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .project-info p {
             color: var(--text-light);
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        /* Formular de contact + Info */
+        /* Secțiune Contact & Formular */
         .contact-section {
             background-color: var(--primary);
             color: var(--white);
             display: grid;
             grid-template-columns: 1fr 1.2fr;
-            gap: 80px;
-            border-radius: 20px;
-            margin: 50px 5%;
-            padding: 80px;
+            gap: 50px;
+            border-radius: 16px;
+            margin: 0 5% 50px 5%;
+            padding: 50px;
         }
 
         .contact-info h2 {
-            font-size: 36px;
+            font-size: 30px;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .contact-info p {
             color: #94A3B8;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            font-size: 15px;
         }
 
         .contact-methods {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
         }
 
         .contact-method-item {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
         .contact-method-icon {
             background-color: rgba(255,255,255,0.05);
             color: var(--accent);
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .contact-method-item h4 {
-            font-size: 14px;
+            font-size: 13px;
             color: #94A3B8;
             font-weight: 500;
         }
 
         .contact-method-item p {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--white);
             margin-bottom: 0;
             font-weight: 600;
@@ -566,61 +554,60 @@
 
         .contact-form {
             background-color: var(--white);
-            padding: 40px;
+            padding: 30px;
             border-radius: 12px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .contact-form h3 {
             color: var(--primary);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 10px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .form-group label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--primary-light);
         }
 
         .form-group input, .form-group textarea {
-            padding: 12px;
+            padding: 10px;
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 14px;
             outline: none;
-            transition: all 0.3s;
+            width: 100%;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
         }
 
         .submit-btn {
             background-color: var(--accent);
             color: var(--primary);
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 6px;
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 14px;
         }
 
         .submit-btn:hover {
@@ -631,35 +618,35 @@
         footer {
             background-color: #020617;
             color: #94A3B8;
-            padding: 80px 5% 40px 5%;
+            padding: 60px 5% 30px 5%;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            grid-template-columns: 1.5fr 1fr 1fr;
             gap: 40px;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .footer-col h4 {
             color: var(--white);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .footer-col ul {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .footer-col ul a {
             color: #94A3B8;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             transition: color 0.3s;
         }
 
@@ -671,25 +658,145 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 40px;
+            padding-top: 30px;
             border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        /* Media Queries pentru Responsive */
+        /* ==========================================================================
+           Media Queries pentru Mobil, Tabletă & Ecrane Mici
+           ========================================================================== */
+        
+        /* Tablete și telefoane mari (Lățime ecran sub 992px) */
         @media (max-width: 992px) {
-            .navbar { padding: 15px 5%; }
-            .nav-links, .cta-btn, .header-top { display: none; }
-            .about-section { grid-template-columns: 1fr; gap: 40px; }
-            .about-image { position: static; }
-            .contact-section { grid-template-columns: 1fr; padding: 40px; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .header-top {
+                display: none; /* Ascundem bara de contact mică pe mobil */
+            }
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            /* Activăm butonul de burger */
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            /* Transformăm navigația într-un meniu drop-down */
+            .nav-links {
+                display: none; /* Ascuns implicit */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 25px 5%;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+                border-top: 1px solid rgba(255,255,255,0.05);
+                gap: 20px;
+                z-index: 1000;
+            }
+
+            /* Clasă de activare din JS pentru meniul de mobil */
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .cta-btn {
+                display: none; /* Ascundem butonul de ofertă din header pe mobil */
+            }
+
+            /* Layout-uri trec pe o singură coloană */
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-image {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .contact-section {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                margin: 0 2% 40px 2%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Telefoane mobile (Lățime ecran sub 600px) */
+        @media (max-width: 600px) {
+            section {
+                padding: 60px 5%;
+            }
+
+            .hero {
+                padding: 90px 5% 70px 5%;
+            }
+
+            .hero h1 {
+                font-size: 28px; /* Text mult mai mic pe mobil */
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .section-header h2 {
+                font-size: 24px;
+            }
+
+            /* Statistici pe o singură coloană */
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                text-align: center;
+            }
+
+            /* Formularul de contact - elementele trec unul sub altul */
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr; /* O singură coloană în footer */
+                gap: 25px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .about-experience-badge {
+                right: 10px;
+                bottom: -10px;
+                padding: 12px;
+            }
+
+            .about-experience-badge span {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Top Bar -->
+    <!-- Header Top Bar (vizibil doar pe desktop) -->
     <div class="header-top">
         <div class="header-top-info">
             <span><i data-lucide="map-pin" style="width:14px;"></i> Chișinău, str. Constructorilor 5/4</span>
@@ -705,13 +812,21 @@
     <header>
         <div class="navbar">
             <a href="#" class="logo">Auto<span>Caravana</span></a>
-            <ul class="nav-links">
-                <li><a href="#" class="active">Acasă</a></li>
-                <li><a href="#despre">Despre noi</a></li>
-                <li><a href="#servicii">Servicii</a></li>
-                <li><a href="#proiecte">Proiecte</a></li>
-                <li><a href="#contact">Contact</a></li>
+            
+            <!-- Buton Burger Mobil -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menu-icon" style="width: 28px; height: 28px;"></i>
+            </button>
+
+            <!-- Meniu Navigație -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active" onclick="closeMobileMenu()">Acasă</a></li>
+                <li><a href="#despre" onclick="closeMobileMenu()">Despre noi</a></li>
+                <li><a href="#servicii" onclick="closeMobileMenu()">Servicii</a></li>
+                <li><a href="#proiecte" onclick="closeMobileMenu()">Proiecte</a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
             </ul>
+            
             <a href="#contact" class="cta-btn">Cere Ofertă</a>
         </div>
     </header>
@@ -723,11 +838,11 @@
         <p>Din 2007, construim drumurile care mișcă Moldova înainte și sprijinim tranziția către energie verde.</p>
         <div class="hero-buttons">
             <a href="#servicii" class="cta-btn" style="padding: 14px 28px;">Serviciile Noastre</a>
-            <a href="#despre" class="btn-secondary">Află Despre Noi</a>
+            <a href="#despre" class="btn-secondary" style="padding: 12px 24px;">Află Despre Noi</a>
         </div>
     </section>
 
-    <!-- Despre noi Section cu Tab-uri Interactive -->
+    <!-- Despre noi Section cu Tab-uri -->
     <section id="despre" class="about-section">
         <div class="about-image">
             <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=800&q=80" alt="Echipă AutoCaravana">
@@ -755,15 +870,15 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <h4>120+</h4>
-                        <p>Proiecte finalizate cu succes în Moldova</p>
+                        <p>Proiecte finalizate cu succes</p>
                     </div>
                     <div class="stat-item">
                         <h4>300+</h4>
-                        <p>Profesioniști (ingineri, topografi, șoferi)</p>
+                        <p>Profesioniști (ingineri, topografi)</p>
                     </div>
                     <div class="stat-item">
                         <h4>18+ ani</h4>
-                        <p>De recunoaștere și premii de excelență</p>
+                        <p>De experiență națională</p>
                     </div>
                 </div>
             </div>
@@ -796,13 +911,6 @@
                             <p>Construim astăzi protejând activ resursele pentru viitor prin utilizarea tehnologiilor ecologice.</p>
                         </div>
                     </li>
-                    <li class="feature-item">
-                        <div class="feature-icon-box"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
-                        <div class="feature-text">
-                            <h4>Lucru în echipă</h4>
-                            <p>Suntem convinși că succesul este rezultatul unui efort comun, coordonat și asumat.</p>
-                        </div>
-                    </li>
                 </ul>
             </div>
 
@@ -832,13 +940,6 @@
                         <div class="feature-text">
                             <h4>Management în timp real</h4>
                             <p>Monitorizare strictă a etapelor de execuție, respectarea riguroasă a termenelor stabilite.</p>
-                        </div>
-                    </li>
-                    <li class="feature-item">
-                        <div class="feature-icon-box"><i data-lucide="dollar-sign" style="width:20px;height:20px;"></i></div>
-                        <div class="feature-text">
-                            <h4>Costuri transparente</h4>
-                            <p>Structuri bugetare clare, fără costuri ascunse pe parcursul derulării contractului.</p>
                         </div>
                     </li>
                 </ul>
@@ -911,7 +1012,7 @@
                 <div class="project-info">
                     <span class="project-meta">Reabilitare drumuri</span>
                     <h3>Proiect Miclești</h3>
-                    <p>Reabilitarea completă a 4 km de carosabil rural cu asfalt reciclat. Siguranță crescută și costuri reduse cu 15%.</p>
+                    <p>Reabilitarea completă a 4 km de carosabil rural cu asfalt reciclat. Siguranță crescută și costuri reduse.</p>
                 </div>
             </div>
             <div class="project-card">
@@ -998,7 +1099,7 @@
     <!-- Footer Section -->
     <footer>
         <div class="footer-grid">
-            <div class="footer-col" style="grid-column: span 1.5;">
+            <div class="footer-col" style="grid-column: span 1.5 / span 1.5;">
                 <a href="#" class="logo" style="margin-bottom: 20px;">Auto<span>Caravana</span></a>
                 <p style="font-size: 14px; margin-top: 15px; color: #64748B;">Lider regional recunoscut în infrastructură, transporturi naționale, lucrări industriale complexe și dezvoltări de energie regenerabilă din Republica Moldova.</p>
             </div>
@@ -1017,7 +1118,6 @@
                     <li><a href="#servicii">Infrastructură Rutieră</a></li>
                     <li><a href="#servicii">Transport Mărfuri</a></li>
                     <li><a href="#servicii">Energie Verde</a></li>
-                    <li><a href="#servicii">Foraje / Topografie</a></li>
                 </ul>
             </div>
         </div>
@@ -1030,23 +1130,47 @@
         </div>
     </footer>
 
-    <!-- Logică JS simplă pentru Tab-uri -->
+    <!-- Logică JS pentru Meniul de Mobil și Tab-uri -->
     <script>
+        // Funcția de deschidere/închidere a meniului de mobil
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuIcon = document.getElementById('menu-icon');
+            navLinks.classList.toggle('active');
+            
+            // Schimbăm iconița burger în X când este activ meniul
+            if (navLinks.classList.contains('active')) {
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons(); // Reactivăm randarea iconiței noi
+        }
+
+        // Închide meniul când un utilizator dă click pe o secțiune din meniu
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuIcon = document.getElementById('menu-icon');
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+        }
+
+        // Schimbarea tab-urilor
         function switchTab(event, tabId) {
-            // Ascunde toate conținuturile tab-urilor
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => content.classList.remove('active'));
 
-            // Dezactivează toate butoanele de tab
             const tabButtons = document.querySelectorAll('.tab-btn');
             tabButtons.forEach(button => button.classList.remove('active'));
 
-            // Afișează conținutul tabului curent și activează butonul asociat
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        // Inițializare iconițe Lucide
+        // Inițializare iconițe Lucide la încărcarea paginii
         lucide.createIcons();
     </script>
 </body>
